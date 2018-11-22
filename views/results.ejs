@@ -1,5 +1,20 @@
 <% include partials/header %>
-<% let i; %>
+<% let i;
+    if (resultobj.Response == "False") { %>
+        <section class="hero is-primary">
+          <div class="hero-body">
+            <div class="container">
+              <h1 class="title">
+                No Search Results found for <%= resultobj.searchTerm %>
+              </h1>
+              <h2 class="subtitle">
+                Please try another search term (atleast 3 lettter) <a href="/">Go Back</a>
+              </h2>
+            </div>
+          </div>
+        </section>
+    <%}
+    else { %>
 
 <section class="hero is-primary">
   <div class="hero-body">
@@ -63,4 +78,5 @@
     </form>
 </section>
     <% }%>
+    <%}%>
 <% include partials/footer %>
