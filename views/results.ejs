@@ -49,7 +49,7 @@
       <%}%>
     <% }; %>
 </section>
-<% var resultsRemaining = Number(resultobj.totalResults/(resultobj.currentPage*10));
+<% var resultsRemaining = Math.floor(Number(resultobj.totalResults/(resultobj.currentPage*10)));
     if (resultsRemaining > 0)
     {
 %>
