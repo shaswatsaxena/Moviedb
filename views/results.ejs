@@ -1,0 +1,66 @@
+<% include partials/header %>
+<% let i; %>
+
+<section class="hero is-primary">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Search Results for <%= resultobj.searchTerm %>
+      </h1>
+      <h2 class="subtitle">
+        You are on Page <%= resultobj.currentPage %> ||| Total Results : <%= resultobj.totalResults %>
+      </h2>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+    <% for(i=0; i < resultobj.Search.length ; i++)  {
+        if ( i%2 == 0 ) {%>
+    <div class="columns">
+    <%}%>
+      <div class="column">
+          <div class="box is-clearfix">
+                  <div class="is-pulled-left">
+                      <figure class="image">
+                          <% if (resultobj.Search[i].Poster == "N/A")
+                                var poster = "https://www.previssima.fr/files/app/img/img-not-found.png";
+                          else
+                                var poster = resultobj.Search[i].Poster;
+                            %>
+                          <img src="<%= poster %>" alt="<%= resultobj.Search[i].Title%> Poster">
+                      </figure>
+                  </div>
+                  <div class="is-pulled-left">
+                      <div class="content">
+                          <p>
+                              <strong><%= resultobj.Search[i].Title%></strong> <span class="tag is-info"><%= resultobj.Search[i].Type%></span>
+                              <br>
+                              Released in the year <%= resultobj.Search[i].Year%>.
+                              <br>
+                              <a class="button is-danger is-rounded" target="_blank" href="https://www.imdb.com/title/<%=resultobj.Search[i].imdbID%>">Read More on IMdb</a>
+                          </p>
+                      </div>
+                  </div>
+          </div>
+      </div>
+      <% if (i%2 == 1 ) {%>
+      </div>
+      <%}%>
+    <% }; %>
+</section>
+<% var resultsRemaining = Number(resultobj.totalResults/(resultobj.currentPage*10));
+    if (resultsRemaining > 0)
+    {
+%>
+<section class="section">
+    <form action="/result" method="GET">
+            <input type="hidden" name="search" type="text" value="<%= resultobj.searchTerm %>">
+            <input type="hidden" name="page" value="<%=++resultobj.currentPage%>">
+        <div class="control has-text-centered">
+            <button class="button is-medium is-primary">Next Page</button>
+        </div>
+    </form>
+</section>
+    <% }%>
+<% include partials/footer %>
