@@ -54,6 +54,9 @@
                               Released in the year <%= resultobj.Search[i].Year%>.
                               <br>
                               <a class="button is-danger is-rounded" target="_blank" href="https://www.imdb.com/title/<%=resultobj.Search[i].imdbID%>">Read More on IMdb</a>
+                              <%  if (resultobj.Search[i].Type == "movie") {%>
+                                  <a class="button is-info is-rounded" target="_blank" href="https://www.yifysubtitles.com/movie-imdb/<%=resultobj.Search[i].imdbID%>">Yify Subtitles</a>
+                              <%}%>
                           </p>
                       </div>
                   </div>
