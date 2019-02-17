@@ -1,0 +1,13 @@
+extends ./partials/layout.pug
+
+block content
+  section.hero.is-danger
+        div.hero-body
+          div.container
+            h1.title ERROR : No Search Results
+            h2.subtitle
+              if (searchTerm.length < 3) 
+                | Please enter at least 3 characters in your search term.
+              else
+                = `Sorry, We could not find any results for  ${searchTerm}. Correct any errors or try another search term.`
+              a(href="/") Go Back

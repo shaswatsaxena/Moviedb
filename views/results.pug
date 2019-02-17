@@ -1,0 +1,53 @@
+extends ./partials/layout.pug
+
+block content
+
+  section.hero.is-primary
+    div.hero-body
+      div.container
+    h1.title 
+      =`Search Results for ${searchTerm}`
+    h2.subtitle
+      =`You are on Page ${page} ||| Total Results : ${allMedia.totalResults}`
+  
+  section.section
+    div.columns.is-multiline
+      each media in allMedia.Search
+        div.column.is-one-third
+          div.box
+            div
+              figure.image
+                img(src=`${(media.Poster === "N/A")?"https://www.previssima.fr/files/app/img/img-not-found.png":media.Poster}` alt=`${media.Title} Poster`)
+            div
+              div.content
+                p
+                  strong #{media.Title}
+                  span.tag.is-info #{media.Type}
+                  br
+                  =`Released in the year ${media.Year}.`
+                  br
+                  a.button.is-danger.is-rounded(
+                    target="_blank",
+                    href=`https://www.imdb.com/title/${media.imdbID}`
+                    ) Read More on IMdb
+                  if (media.Type == "movie")
+                    a.button.is-info.is-rounded(
+                      target="_blank",
+                      href=`https://www.yifysubtitles.com/movie-imdb/${media.imdbID}`
+                      ) Subtitles
+  -const resultsRemaining = Math.floor(Number(allMedia.totalResults/(page*10)));
+  if resultsRemaining > 0
+    section.section
+      form(action="/result",method="GET")
+        input(
+          type="hidden",
+          name="search"
+          value=`${searchTerm}`
+        )
+        input(
+          type="hidden",
+          name="page",
+          value=`${++page}`
+        )
+        div.control.has-text-centered
+          button.button.is-medium.is-primary Next Page

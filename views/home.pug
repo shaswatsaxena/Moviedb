@@ -1,0 +1,20 @@
+extends ./partials/layout.pug
+
+block content
+  section.hero.is-primary.is-fullheight
+    div.hero-body
+      div.container.has-text-centered
+        h1.title Movie and TV Lookup
+          form(action="/result",method="GET")
+            div.section
+              input.input.is-rounded(
+                name="search",
+                type="text",
+                placeholder="Enter the search term for any Movie or TV Series"
+              )
+              input(
+                type="hidden",
+                name="page",
+                value="1")
+            div.control.has-text-centered
+              button.button.is-medium.is-primary.is-inverted.is-outlined Search
