@@ -1,8 +1,10 @@
 const express = require("express"),
-  request = require("request");
-(app = express()),
-  (bodyParser = require("body-parser")),
-  (port = process.env.PORT);
+  mediaController = require("./controllers/media"),
+  searchController = require("./controllers/search"),
+  bodyParser = require("body-parser");
+
+const app = express();
+let port = process.env.PORT;
 
 if (port == null || port == "") {
   port = 3000;
@@ -16,21 +18,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //===================================
 app.get("/", (req, res) => res.render("home"));
 
-app.get("/result", function(req, res) {
-  let searchTerm = req.query.search;
-  let page = Number(req.query.page) ? Number(req.query.page) : 1;
-  let apiURL =
-    "http://www.omdbapi.com/?apikey=thewdb&s=" + searchTerm + "&page=" + page;
-  request(apiURL, function(error, response, body) {
-    if (error) res.send("ERROR:", error);
-    else {
-      console.log("Status Code:", response && response.statusCode);
-      const allMedia = JSON.parse(body);
-      if (allMedia.Response === "True")
-        res.render("results", { allMedia, searchTerm, page });
-      else res.render("noResult", { searchTerm });
-    }
-  });
-});
+app.get("/result", mediaController.getMedia);
+app.get("/searches", searchController.getSearches);
 
 app.listen(port, () => console.log(`Movie API App listening on port ${port}!`));
